@@ -2,15 +2,15 @@
     <div class="b-post-container">
         <h1 class="b-post-title"><%=blog.title%></h1>
         <div class="b-post-detail">
-            <span><%=blog.author%></span> <span><%=blog.date%></span>
+            <span><%=blog.author.toUpperCase()%></span> <span><%=blog.create_at%></span>
         </div>
         
         <div class="b-post-content">
             <p><%=blog.body%></p>
         </div>
         <div class="b-post-view-times">
-                <span>本文已被阅读12次</span>
-            </div>
+            <span>本文已被阅读<%=blog.views%>次</span>
+        </div>
     </div>
     <div class="b-post-action">
         <span class="b-post-like iconfont icon-heart "></span>

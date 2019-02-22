@@ -20,4 +20,12 @@ const blogSchema = new mongoose.Schema({
 })
 
 const Blog = mongoose.model('blog', blogSchema)
+
+Blog.increaseView = async (id) => {
+    await Blog.findOneAndUpdate({_id: id}, {$inc: { views: 1 }})
+}
+Blog.findBlog = async (id) => {
+    return await Blog.findById(id)
+}
+
 module.exports = Blog

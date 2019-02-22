@@ -1,6 +1,9 @@
 const Router = require('koa-router')
 const path = require('path')
+const md5 = require('md5')
 let BlogModel = require(path.resolve(__dirname, '../models/blog'))
+let UserModel = require(path.resolve(__dirname, '../models/user'))
+const {formatTime} = require('../util')
 
 let router = new Router
 
@@ -31,9 +34,9 @@ router.get('/login', async (ctx) => {
 
 router.get('/post/:id', async ctx => {
     let {id} = ctx.params
-    console.log(id)
-    let blog = await BlogModel.findById( id)
-
+    await BlogModel.increaseView(id)
+    let blog = await BlogModel.findBlog(id)
+    blog.create_at = formatTime(blog.date)
     let user = ctx.session.islogin
     let username = ''
     if(user) {
@@ -74,6 +77,27 @@ router.post('/sub-post', async (ctx) => {
         console.log(`success`)
     })
     ctx.redirect('/')
+})
+
+router.post('/user/register', async(ctx) => {
+    let { email, username, password} = ctx.request.body
+
+    let isExists = await UserModel.userIsExists(username)
+    console.log(isExists)
+    if(isExists) {
+        ctx.body = {
+            data: '用户已存在'
+        }
+    }
+
+    // await UserModel.create({
+    //     email: email,
+    //     username: username,
+    //     password: md5(`${password}_uuid_uuid`)
+    // })
+
+
+    console.log(await UserModel.find())
 })
 
 

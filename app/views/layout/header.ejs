@@ -15,7 +15,7 @@
         <% if(!user) {%>
             <a href="/login" class="login">登录</a>
         <% } else {%>
-            <span><%= username %></span>
+            <span><%= username.charAt(0).toUpperCase() %></span>
             <a href="/add">发布</a>
             <a href="/logout">退出</a>
         <% } %>
