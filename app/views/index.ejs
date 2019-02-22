@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <% if(!user) {%>
+            <a href="/login">登录</a>
+        <% } else {%>
+            <p><%= username %></p>
+            <a href="/add">发布</a>
+            <a href="/logout">退出</a>
+        <% } %>
+    </div>
+    <h1><%= data%></h1>
+    <ul>
+        <% blogs.forEach(blog => {%>
+        <li>
+            <div>
+                <a href="/post/<%=blog.id%>"><%=blog.title%></a>
+                
+                <i><%=blog.author%></i>
+            </div>
+            <div><%=blog.date%></div>
+            <div><%=blog.body%></div>
+            <a href="/edit?id=<%=blog.id%>">编辑</a>
+            <a href="/delete?id=<%=blog.id%>">删除</a>
+        </li>
+        <% })%>
+    </ul>
+    <footer>
+        <%= views %> times
+    </footer>
+</body>
+</html>
