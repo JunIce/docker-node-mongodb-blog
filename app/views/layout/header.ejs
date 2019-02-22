@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <header>
+        <a href="/" title="blog" class="logo"><h1>BLOG</h1></a>
+        <div class="userpanel">
+        <% if(!user) {%>
+            <a href="/login" class="login">登录</a>
+        <% } else {%>
+            <span><%= username %></span>
+            <a href="/add">发布</a>
+            <a href="/logout">退出</a>
+        <% } %>
+        </div>
+    </header>
