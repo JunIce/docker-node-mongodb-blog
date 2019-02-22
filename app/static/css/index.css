@@ -1,9 +1,17 @@
-body,div,p,h1,h2,span,ul,li,i{margin: 0; padding: 0}
+@font-face {font-family: "iconfont";
+    src: url('iconfont.eot?t=1550821037744'); /* IE9 */
+    src: url('iconfont.eot?t=1550821037744#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('data:application/x-font-woff2;charset=utf-8;base64,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') format('woff2'),
+    url('iconfont.woff?t=1550821037744') format('woff'),
+    url('iconfont.ttf?t=1550821037744') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url('iconfont.svg?t=1550821037744#iconfont') format('svg'); /* iOS 4.1- */
+  }
+body,div,p,h1,h2,h3,span,ul,li,i{margin: 0; padding: 0}
 body{
     background-color: #f4f4f4
 }
 a{text-decoration: none; color: inherit;}
-h1, h2{font-size: inherit;font-weight: normal;}
+h1, h2, h3{font-size: inherit;font-weight: normal;}
 li{list-style: none;}
 header{
     background-color: #ffffff;
@@ -66,4 +74,85 @@ footer{
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+
+/*blog-post*/
+.b-post-container{
+    width: 800px;
+    background-color: #ffffff;
+    margin: 40px auto;
+    padding: 40px 80px;
+}
+
+
+
+
+  
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-eye:before {
+content: "\e78f";
+}
+
+.icon-user:before {
+content: "\e7ae";
+}
+
+.icon-flag:before {
+content: "\e7cb";
+}
+
+.icon-heart:before {
+content: "\e7df";
+}
+
+.icon-star:before {
+content: "\e7e0";
+}
+
+.icon-right:before {
+content: "\e7eb";
+}
+
+.icon-left:before {
+content: "\e7ec";
+}
+
+.icon-check:before {
+content: "\e7fc";
+}
+
+.icon-close:before {
+content: "\e7fd";
+}
+
+.icon-heart-fill:before {
+content: "\e849";
+}
+
+.icon-star-fill:before {
+content: "\e86a";
+}
+
+
+.b-post-action{
+    text-align: center;
+}
+.b-post-like{
+    cursor: pointer;
+    font-size: 32px;
+    transition: .2s;
+}
+.b-post-like:hover{
+    font-size: 46px;
+}
+.b-post-like-active{
+    color: red;
 }

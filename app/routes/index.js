@@ -1,12 +1,11 @@
 const Router = require('koa-router')
-let BlogModel = require('./models/blog')
+const path = require('path')
+let BlogModel = require(path.resolve(__dirname, '../models/blog'))
 
 let router = new Router
 
 router.get('/', async (ctx) => {
-    let n = ctx.session.views || 0;
-    ctx.session.views = ++n;
-
+    
     let user = ctx.session.islogin
     let username = ''
     if(user) {
@@ -15,8 +14,7 @@ router.get('/', async (ctx) => {
     let blogs = await BlogModel.find() || []
 
     await ctx.render('index', {
-        data: 'hello ds',
-        views: n,
+        views: ctx.session.views,
         user: user,
         username: username,
         blogs: blogs
@@ -35,8 +33,17 @@ router.get('/post/:id', async ctx => {
     let {id} = ctx.params
     console.log(id)
     let blog = await BlogModel.findById( id)
-    console.log(blog)
-    await ctx.render('post', {blog: blog})
+
+    let user = ctx.session.islogin
+    let username = ''
+    if(user) {
+        username = ctx.cookies.get('username')
+    }
+    await ctx.render('post', {
+        blog: blog,
+        user: user,
+        username: username
+    })
 })
 
 router.get('/logout', ctx => {
