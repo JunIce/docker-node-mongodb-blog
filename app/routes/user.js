@@ -5,6 +5,6 @@ let user = new Router
 
 user.prefix('/user')
 
-user.get('login', UserController.userRegsiter)
+user.get('/login', UserController.userLogin)
 
 module.exports = user
