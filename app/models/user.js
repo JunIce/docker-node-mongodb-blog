@@ -3,15 +3,13 @@ var color = require('random-color')()
 const userSchema = new mongoose.Schema({
     userid: String,
     username: String,
+    password: String,
     email: String,
     userpic: {
         type: String,
         default: color.hexString()
     },
-    create_at: {
-        type: Number,
-        default: +new Date()
-    },
+    create_at: Number,
     random: String
 })
 

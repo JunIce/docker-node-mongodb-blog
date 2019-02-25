@@ -22,13 +22,13 @@
             <div id="signup">
                 <h1>Sign Up for Free</h1>
 
-                <form action="/" method="post">
+                <form id="user_reg" action="/user/register" method="post" onsubmit="register()">
                     <div class="field-wrap">
-                            <label>
-                                用户名<span class="req">*</span>
-                            </label>
-                            <input type="text" name="username" required autocomplete="off" />
-                        </div>
+                        <label>
+                            用户名<span class="req">*</span>
+                        </label>
+                        <input type="text" name="username" required autocomplete="off" />
+                    </div>
                     <div class="field-wrap">
                         <label>
                             邮箱<span class="req">*</span>
@@ -52,7 +52,7 @@
             <div id="login">
                 <h1>Welcome Back!</h1>
 
-                <form action="/" method="post">
+                <form action="/action/login" method="post">
 
                     <div class="field-wrap">
                         <label>
@@ -80,20 +80,35 @@
 
     </div>
     <script>
-    $('.tab a').on('click', function (e) {
-  
-  e.preventDefault();
-  
-  $(this).parent().addClass('active');
-  $(this).parent().siblings().removeClass('active');
-  
-  target = $(this).attr('href');
+$('.tab a').on('click', function (e) {
 
-  $('.tab-content > div').not(target).hide();
-  
-  $(target).fadeIn(600);
-  
+e.preventDefault();
+
+$(this).parent().addClass('active');
+$(this).parent().siblings().removeClass('active');
+
+target = $(this).attr('href');
+
+$('.tab-content > div').not(target).hide();
+
+$(target).fadeIn(600);
+
 });
+
+function register(e) {
+    e.preventDefault()
+
+    var username = $("#user_reg input[name='username']").val()
+    var password = $("#user_reg input[name='password']").val()
+    var email = $("#user_reg input[name='email']").val()
+    if(!username || !password || !email) {
+        return false
+    }
+    console.log(username, password, email)
+    // $.post('/user/register', {username: username, password: password, email: email})
+    
+}
+
     </script>
 </body>
 
