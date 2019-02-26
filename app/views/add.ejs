@@ -1,16 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>post</title>
-</head>
-<body>
-    <form action="/sub-post" method="post">
-        <input type="text" name="title" />
-        <textarea name="content" id="" cols="30" rows="10"></textarea>
-        <input type="submit" value="提交">
+<%- include('layout/header.ejs') %>
+<div class="form-wrap">
+
+    <form action="/blog/add" method="post">
+        <div class="field-wrap">
+            <label for="title">标题</label>
+            <input type="text" name="title" id="title"/>
+        </div>
+        <div class="field-wrap">
+        <label for="content">内容</label>
+        <textarea name="content" id="content" rows="15"></textarea>
+        </div>
+        <input type="submit" value="提交" id="blog-submit">
     </form>
+</div>
+    <style>
+        .form-wrap{
+            width: 100%;
+            padding: 40px 40px;
+            box-sizing: border-box;
+        }
+        .field-wrap{
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        label{
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        input,textarea{
+            font-size: 18px;
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 8px 14px;
+            background: none;
+            background-image: none;
+            border: 1px solid #a0b3b0;
+            color: #333333;
+            border-radius: 0;
+            transition: border-color .25s ease, box-shadow .25s ease;
+            box-sizing: border-box;
+            outline: none;
+        }
+        #blog-submit{
+            background-color: #13232fe6;
+            color:#fff;
+        }
+    </style>
 </body>
 </html>

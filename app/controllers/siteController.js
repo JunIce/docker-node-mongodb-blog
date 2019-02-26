@@ -7,10 +7,8 @@ const {formatTime} = require('../util')
 
 module.exports = {
     home: async ctx => {
-
         let u = ctx.session.u
-        let user = await UserModel.findOne({_id: u.uid, username: u.uname});
-
+        let user =  u ? await UserModel.findOne({_id: u.uid, username: u.uname}) : null;
 
         let blogs = await BlogModel.find() || []
 
@@ -21,17 +19,24 @@ module.exports = {
         })
     },
     siteAddBlog: async ctx => {
-        await ctx.render('add')
+        let u = ctx.session.u
+        if(!u) {
+            ctx.redirect('/user/login')
+            return
+        }
+        let user =  u ? await UserModel.findOne({_id: u.uid, username: u.uname}) : null;
+        await ctx.render('add', {
+            user: user
+        })
     },
     siteBlogDetail: async ctx => {
         let {id} = ctx.params
         await BlogModel.increaseView(id)
         let blog = await BlogModel.findBlog(id)
-        blog.create_at = formatTime(blog.date)
-
+        blog.create_at = formatTime(blog.create_at)
 
         let u = ctx.session.u
-        let user = await UserModel.findOne({_id: u.uid, username: u.uname});
+        let user =  u ? await UserModel.findOne({_id: u.uid, username: u.uname}) : null;
 
         await ctx.render('post', {
             blog: blog,
@@ -40,19 +45,15 @@ module.exports = {
     },
     siteInfoAddPost: async ctx => {
         let {title, content} = ctx.request.body
-        let blog = new BlogModel({
+        let u = ctx.session.u
+
+        await BlogModel.create({
             title: title,
-            body: content,
-            date: +new Date,
-            author: ctx.cookies.get('username')
+            content: content,
+            create_at: +new Date,
+            author: u.uname
         })
     
-        await blog.save((err) => {
-            if(err) {
-                throw new Error(err)
-            }
-            console.log(`success`)
-        })
         ctx.redirect('/')
     }
 }

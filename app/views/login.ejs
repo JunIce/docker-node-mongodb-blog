@@ -22,7 +22,7 @@
             <div id="signup">
                 <h1>Sign Up for Free</h1>
 
-                <form id="user_reg" action="/user/register" method="post" onsubmit="register()">
+                <form id="user_reg" action="/user/register" method="post" onsubmit="return register()">
                     <div class="field-wrap">
                         <label>
                             用户名<span class="req">*</span>
@@ -82,31 +82,41 @@
     <script>
 $('.tab a').on('click', function (e) {
 
-e.preventDefault();
+    e.preventDefault();
 
-$(this).parent().addClass('active');
-$(this).parent().siblings().removeClass('active');
+    $(this).parent().addClass('active');
+    $(this).parent().siblings().removeClass('active');
 
-target = $(this).attr('href');
+    target = $(this).attr('href');
 
-$('.tab-content > div').not(target).hide();
+    $('.tab-content > div').not(target).hide();
 
-$(target).fadeIn(600);
+    $(target).fadeIn(600);
 
 });
 
 function register(e) {
-    e.preventDefault()
 
     var username = $("#user_reg input[name='username']").val()
     var password = $("#user_reg input[name='password']").val()
     var email = $("#user_reg input[name='email']").val()
     if(!username || !password || !email) {
+        alert('参数不全')
         return false
     }
-    console.log(username, password, email)
-    // $.post('/user/register', {username: username, password: password, email: email})
-    
+
+    $.post('/user/register', {
+        username: username,
+        password: password,
+        email: email
+    })
+    .then(res => {
+        alert(res.message)
+        if(res.status == 200) {
+            window.location.href = '/user/login#login'
+        }
+    })
+    return false
 }
 
 function login(e){

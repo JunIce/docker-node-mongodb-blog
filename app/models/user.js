@@ -1,5 +1,6 @@
 const mongoose = require('./db')
 var color = require('random-color')()
+const {generatePassword} = require('../util')
 const userSchema = new mongoose.Schema({
     userid: String,
     username: String,
@@ -20,5 +21,14 @@ User.userExists = async (username) => {
     return u
 }
 
+User.createUser = async (username, password, email) => {
+    await User.create({
+        email: email,
+        username: username,
+        password: generatePassword(password),
+        create_at: +new Date,
+        userpic: color.hexString()
+    })
+}
 
 module.exports = User

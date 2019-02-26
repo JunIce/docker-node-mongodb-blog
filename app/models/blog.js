@@ -2,7 +2,7 @@ const mongoose = require('./db')
 const blogSchema = new mongoose.Schema({
     title: String,
     author: String,
-    body: String,
+    content: String,
     create_at: String,
     update_at: String,
     views: {
