@@ -7,4 +7,6 @@ site.get('/', siteController.home)
 site.get('/post/:id', siteController.siteBlogDetail)
 site.get('/post/add', siteController.siteAddBlog)
 
+site.post('/post/add', siteController.siteInfoAdd)
+
 module.exports = site
