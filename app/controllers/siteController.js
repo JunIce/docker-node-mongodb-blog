@@ -1,21 +1,22 @@
 const path = require('path')
 let BlogModel = require(path.resolve(__dirname, '../models/blog'))
+let UserModel = require(path.resolve(__dirname, '../models/user'))
+
 const {formatTime} = require('../util')
 
 
 module.exports = {
     home: async ctx => {
-        let user = ctx.session.islogin
-        let username = ''
-        if(user) {
-            username = ctx.cookies.get('username')
-        }
+
+        let u = ctx.session.u
+        let user = await UserModel.findOne({_id: u.uid, username: u.uname});
+
+
         let blogs = await BlogModel.find() || []
 
         await ctx.render('index', {
             views: ctx.session.views,
             user: user,
-            username: username,
             blogs: blogs
         })
     },
@@ -27,15 +28,14 @@ module.exports = {
         await BlogModel.increaseView(id)
         let blog = await BlogModel.findBlog(id)
         blog.create_at = formatTime(blog.date)
-        let user = ctx.session.islogin
-        let username = ''
-        if(user) {
-            username = ctx.cookies.get('username')
-        }
+
+
+        let u = ctx.session.u
+        let user = await UserModel.findOne({_id: u.uid, username: u.uname});
+
         await ctx.render('post', {
             blog: blog,
-            user: user,
-            username: username
+            user: user
         })
     },
     siteInfoAddPost: async ctx => {

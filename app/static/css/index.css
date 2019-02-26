@@ -32,7 +32,15 @@ header{
 .login:hover{
     color: #333333;
 }
-
+.userpanel .userpic{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+}
 
 .container{
     width: 800px;

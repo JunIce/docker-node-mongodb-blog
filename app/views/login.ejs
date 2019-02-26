@@ -52,20 +52,20 @@
             <div id="login">
                 <h1>Welcome Back!</h1>
 
-                <form action="/action/login" method="post">
+                <form action="/user/login" method="post" id="user_login" onsubmit="return login();">
 
                     <div class="field-wrap">
                         <label>
                             用户名<span class="req">*</span>
                         </label>
-                        <input type="text" name="username" required autocomplete="off" />
+                        <input type="text" name="username"  autocomplete="off" />
                     </div>
 
                     <div class="field-wrap">
                         <label>
                             密码<span class="req">*</span>
                         </label>
-                        <input type="password" name="password" required autocomplete="off" />
+                        <input type="password" name="password"  autocomplete="off" />
                     </div>
 
                     <p class="forgot"><a href="#">忘记密码?</a></p>
@@ -107,6 +107,29 @@ function register(e) {
     console.log(username, password, email)
     // $.post('/user/register', {username: username, password: password, email: email})
     
+}
+
+function login(e){
+    var username = $("#user_login input[name='username']").val()
+    var password = $("#user_login input[name='password']").val()
+
+    if(!username || !password) {
+        alert(`请输入用户名或密码`)
+        return false
+    }
+
+    $.post('/user/login',{
+        username: username,
+        password: password
+    })
+    .then(res => {
+        alert(res.message)
+        if(res.status !== 200) {
+            return false
+        }
+        window.location.href = '/'
+    })
+    return false
 }
 
     </script>

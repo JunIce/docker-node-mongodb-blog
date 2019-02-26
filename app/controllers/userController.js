@@ -1,6 +1,7 @@
 const path = require('path')
+const rndStr = require('randomstring')
 let UserModel = require(path.resolve(__dirname, '../models/user'))
-const {generatePassword} = require('../util')
+const {generatePassword, generateToken} = require('../util')
 
 module.exports = {
     userLogin: async ctx => {
@@ -30,18 +31,42 @@ module.exports = {
     },
     userLoginPost: async ctx => {
         let {username, password} = ctx.request.body
-    
+
+        let userExists = username && await UserModel.userExists(username)
+
+        // 用户不存在
+        if(!userExists) { 
+            ctx.body = {
+                status: 500,
+                message: '用户名不存在'
+            }
+            return
+        }
+
         let gpassword = generatePassword(password)
-
         let user = await UserModel.findOne({username: username, password: gpassword})
+        // 密码错误
+        if(!user) {
+            ctx.body = {
+                status: 500,
+                message: '用户名或密码不正确'
+            }
+            return;
+        }
 
-        if(user) {
-            ctx.cookies.set('username', user.username)
-            ctx.cookies.set('userid', user.id)
-            ctx.redirect('/')
-            console.log('user exists')
-        }else{
-            console.log('user not exists')
+        // 写入session, 并重定向
+        let s = rndStr.generate(12)
+        
+        ctx.session.u = {
+            uname: user.username,
+            uid: user.id,
+            token: generateToken(user.id, user.username, s)
+        }
+
+        await UserModel.findOneAndUpdate({_id: user.id}, {rnd: s})
+        ctx.body = {
+            status: 200,
+            message: '登录成功'
         }
     }
 }

@@ -13,11 +13,11 @@
         <a href="/" title="blog" class="logo"><h1>BLOG</h1></a>
         <div class="userpanel">
         <% if(!user) {%>
-            <a href="/login" class="login">登录</a>
+            <a href="/user/login" class="login">登录</a>
         <% } else {%>
-            <span><%= username.charAt(0).toUpperCase() %></span>
-            <a href="/add">发布</a>
-            <a href="/logout">退出</a>
+            <div class="userpic" style="background-color: <%=user.userpic%>"><%= user.username.charAt(0).toUpperCase() %></div>
+            <a href="/post/add">发布</a>
+            <a href="/user/logout">退出</a>
         <% } %>
         </div>
     </header>

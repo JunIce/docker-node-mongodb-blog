@@ -10,12 +10,12 @@ const userSchema = new mongoose.Schema({
         default: color.hexString()
     },
     create_at: Number,
-    random: String
+    rnd: String
 })
 
 const User = mongoose.model('user', userSchema)
 
-User.userIsExists = async (username) => {
+User.userExists = async (username) => {
     let u = await User.findOne({username: username})
     return u
 }
