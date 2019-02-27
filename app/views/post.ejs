@@ -3,6 +3,9 @@
         <h1 class="b-post-title"><%=blog.title%></h1>
         <div class="b-post-detail">
             <span><%=blog.author.toUpperCase()%></span> <span><%=blog.create_at%></span>
+            <% if(user.username && blog.author.toUpperCase() == user.username.toUpperCase()){%>
+                <a href="/" class="b-post-edit">编辑</a>
+            <%} %>
         </div>
         
         <div class="b-post-content">
@@ -13,7 +16,7 @@
         </div>
     </div>
     <div class="b-post-action">
-        <span class="b-post-like iconfont icon-heart "></span>
+        <span class="b-post-like iconfont icon-heart <%= blog.userFava == 1 ? 'icon-heart-fill b-post-like-active': ''%>" data-pid="<%=blog.id%>"></span>
     </div>
     
     <style>
@@ -33,13 +36,21 @@
         line-height: 30px;
         letter-spacing: 2px;
     }
+    .b-post-action{
+        margin-bottom: 100px;
+    }
     </style>
     <script>
     $('.b-post-like').click(function(){
+        let pid = $(this).data('pid')
+        $.post('/blog/favorite', {
+            postId: pid
+        }).then(res => {
+            alert(res.message)
+        })
         $(this).toggleClass('icon-heart-fill')
         $(this).toggleClass('b-post-like-active')
     })
-    
     </script>
 </body>
 </html>
