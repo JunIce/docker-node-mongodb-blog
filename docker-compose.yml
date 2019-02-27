@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build:
+      dockerfile: Blog-Dockerfile
+      context: .
+    ports:
+      - "8002:8000"
+    depends_on:
+      - mongo
+  mongo:
+    image: '18400f87db91'
+    volumes:
+      - "./data:/data/db"
