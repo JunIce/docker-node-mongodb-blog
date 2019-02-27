@@ -3,7 +3,7 @@
         <h1 class="b-post-title"><%=blog.title%></h1>
         <div class="b-post-detail">
             <span><%=blog.author.toUpperCase()%></span> <span><%=blog.create_at%></span>
-            <% if(user.username && blog.author.toUpperCase() == user.username.toUpperCase()){%>
+            <% if(user && blog.author.toUpperCase() == user.username.toUpperCase()){%>
                 <a href="/" class="b-post-edit">编辑</a>
             <%} %>
         </div>
@@ -47,9 +47,12 @@
             postId: pid
         }).then(res => {
             alert(res.message)
+            if(res.status !== 200) {
+                return
+            }
+            $(this).toggleClass('icon-heart-fill')
+            $(this).toggleClass('b-post-like-active')
         })
-        $(this).toggleClass('icon-heart-fill')
-        $(this).toggleClass('b-post-like-active')
     })
     </script>
 </body>

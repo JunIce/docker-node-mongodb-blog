@@ -25,7 +25,6 @@ app.use(session(CONFIG, app))
 app.use(views(path.join(__dirname, 'views'), {extension: 'ejs'}))
 app.use(static(path.resolve(__dirname, 'static')))
 app.use(bodyParser())
-
 app.use(routers())
 
 app.listen(`2301`, () => {
